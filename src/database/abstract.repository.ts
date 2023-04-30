@@ -73,6 +73,10 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     return this.model.find(filterQuery, {}, { lean: true });
   }
 
+  async findOneAndDelete(filterQuery: FilterQuery<TDocument>) {
+    return this.model.deleteOne(filterQuery);
+  }
+
   async startTransaction() {
     const session = await this.connection.startSession();
     session.startTransaction();
