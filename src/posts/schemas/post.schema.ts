@@ -7,13 +7,10 @@ export class PostType extends AbstractDocument {
   postId: string;
 
   @Prop()
-  name: string;
+  content: string;
 
   @Prop()
-  price: number;
-
-  @Prop()
-  phoneNumber: string;
+  title: string;
 }
 
 export const PostSchema = SchemaFactory.createForClass(PostType);

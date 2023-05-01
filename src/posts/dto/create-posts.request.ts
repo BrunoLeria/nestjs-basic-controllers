@@ -1,18 +1,13 @@
-import {
-  IsString,
-  IsNotEmpty,
-  IsPositive,
-  IsPhoneNumber,
-} from 'class-validator';
+import { IsString, IsNotEmpty, MaxLength } from 'class-validator';
 
 export class CreatePostRequest {
   @IsString()
   @IsNotEmpty()
-  name: string;
+  @MaxLength(500)
+  content: string;
 
-  @IsPositive()
-  price: number;
-
-  @IsPhoneNumber()
-  phoneNumber: string;
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(150)
+  title: string;
 }
