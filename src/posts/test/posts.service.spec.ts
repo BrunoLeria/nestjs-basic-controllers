@@ -6,7 +6,6 @@ import { PostType } from '../schemas/post.schema';
 import { UpdatePostRequest } from '../dto/update-posts.request';
 import { lorem } from './constants/lorem';
 import { CreatePostRequest } from '../dto/create-posts.request';
-import { uuid } from 'uuidv4';
 
 jest.mock('../posts.repository');
 
