@@ -25,13 +25,15 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
       ...document,
       _id: new Types.ObjectId(),
     });
-    return (
-      await createdDocument.save(options)
-    ).toJSON() as unknown as TDocument;
+    return await createdDocument.save(options);
   }
 
   async findOne(filterQuery: FilterQuery<TDocument>): Promise<TDocument> {
-    const document = await this.model.findOne(filterQuery, {}, { lean: true });
+    const document = await this.model.findOne(
+      filterQuery,
+      { __v: 0 },
+      { lean: true },
+    );
 
     if (!document) {
       this.logger.warn('Document not found with filterQuery', filterQuery);
@@ -70,11 +72,11 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
   }
 
   async find(filterQuery: FilterQuery<TDocument>) {
-    return this.model.find(filterQuery, {}, { lean: true });
+    return this.model.find(filterQuery, { __v: 0 }, { lean: true });
   }
 
   async findOneAndDelete(filterQuery: FilterQuery<TDocument>) {
-    return this.model.deleteOne(filterQuery);
+    return this.model.findOneAndDelete(filterQuery);
   }
 
   async startTransaction() {
