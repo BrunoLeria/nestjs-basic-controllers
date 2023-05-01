@@ -8,10 +8,8 @@ export abstract class MockModel<T> {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructorSpy(_createAbstractData: T): void {}
 
-  findOne(): { exec: () => T } {
-    return {
-      exec: (): T => this.abstractStub,
-    };
+  async findOne(): Promise<T> {
+    return this.abstractStub;
   }
 
   async find(): Promise<T[]> {
