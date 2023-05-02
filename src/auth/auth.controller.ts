@@ -2,7 +2,7 @@ import { Controller, HttpCode, Post, UseGuards, Res } from '@nestjs/common';
 import { CurrentUser } from './current-user.decorator';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { Response } from 'express';
-import { UserType } from 'src/users/schemas/user.schema';
+import { UserType } from '../users/schemas/user.schema';
 import { AuthService } from './auth.service';
 
 @Controller('login')

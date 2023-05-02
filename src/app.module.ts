@@ -12,9 +12,12 @@ import { AuthModule } from './auth/auth.module';
       isGlobal: true,
       validationSchema: Joi.object({
         MONGODB_URI: Joi.string().required(),
+        MONGODB_DB: Joi.string().required(),
         PORT: Joi.number().required(),
+        JWT_EXPIRATION: Joi.string().required(),
+        JWT_SECRET: Joi.string().required(),
       }),
-      envFilePath: '../../.env',
+      envFilePath: './.env',
     }),
     DatabaseModule,
     PostsModule,
