@@ -1,4 +1,4 @@
-import { PostType } from 'src/posts/schemas/post.schema';
+import { PostType } from '../../schemas/post.schema';
 import { Types } from 'mongoose';
 
 export const postStub = (): PostType => {
