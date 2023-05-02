@@ -4,13 +4,11 @@ import { UpdateUserRequest } from './dto/update-users.request';
 import { UsersRepository } from './users.repository';
 import { UserType } from './schemas/user.schema';
 import { uuid } from 'uuidv4';
-import { AuthService } from '../auth/auth.service';
+import * as bcrypt from 'bcrypt';
+
 @Injectable()
 export class UsersService {
-  constructor(
-    private readonly usersRepository: UsersRepository,
-    private readonly authService: AuthService,
-  ) {}
+  constructor(private readonly usersRepository: UsersRepository) {}
 
   async getUsers(): Promise<UserType[]> {
     return this.usersRepository.find({});
@@ -27,9 +25,7 @@ export class UsersService {
     const session = await this.usersRepository.startTransaction();
     try {
       const newUser = { userId: uuid(), ...createUserRequest };
-      newUser.password = await this.authService.hashedPassword(
-        newUser.password,
-      );
+      newUser.password = await bcrypt.hash(newUser.password, 10);
       const result = await this.usersRepository.create(newUser);
       await session.commitTransaction();
       return result;

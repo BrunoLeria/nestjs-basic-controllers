@@ -15,10 +15,6 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async hashedPassword(password: string): Promise<string> {
-    return await bcrypt.hash(password, 10);
-  }
-
   async login(user: UserType, response: Response) {
     const tokenPayload: TokenPayload = {
       userId: user._id.toHexString(),
