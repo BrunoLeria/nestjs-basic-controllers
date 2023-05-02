@@ -11,7 +11,7 @@ export class AuthController {
 
   @HttpCode(200)
   @UseGuards(LocalAuthGuard)
-  @Post('login')
+  @Post()
   async login(
     @CurrentUser() user: UserType,
     @Res({ passthrough: true }) response: Response,
