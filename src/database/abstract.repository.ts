@@ -1,4 +1,8 @@
-import { Logger, NotFoundException } from '@nestjs/common';
+import {
+  Logger,
+  NotFoundException,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import {
   FilterQuery,
   Model,
@@ -20,11 +24,18 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
   async create(
     document: Omit<TDocument, '_id'>,
     options?: SaveOptions,
+    uniqueField?: FilterQuery<TDocument>,
   ): Promise<TDocument> {
     const createdDocument = new this.model({
       ...document,
       _id: new Types.ObjectId(),
     });
+    if (uniqueField) {
+      const existingDocument = await this.model.findOne(uniqueField);
+      if (existingDocument) {
+        throw new UnprocessableEntityException('This document already exists');
+      }
+    }
     return await createdDocument.save(options);
   }
 
@@ -76,7 +87,14 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
   }
 
   async findOneAndDelete(filterQuery: FilterQuery<TDocument>) {
-    return this.model.findOneAndDelete(filterQuery);
+    const document = await this.model.findOneAndDelete(filterQuery);
+
+    if (!document) {
+      this.logger.warn(`Document not found with filterQuery:`, filterQuery);
+      throw new NotFoundException('Document not found.');
+    }
+
+    return document;
   }
 
   async startTransaction() {
