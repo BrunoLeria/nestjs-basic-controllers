@@ -1,4 +1,4 @@
-import { Injectable, UnprocessableEntityException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateUserRequest } from './dto/create-users.request';
 import { UpdateUserRequest } from './dto/update-users.request';
 import { UsersRepository } from './users.repository';
@@ -19,14 +19,15 @@ export class UsersService {
   }
 
   async createUser(createUserRequest: CreateUserRequest): Promise<UserType> {
-    if (await this.getUser({ email: createUserRequest.email })) {
-      throw new UnprocessableEntityException('Email already exists');
-    }
     const session = await this.usersRepository.startTransaction();
     try {
       const newUser = { userId: uuid(), ...createUserRequest };
       newUser.password = await bcrypt.hash(newUser.password, 10);
-      const result = await this.usersRepository.create(newUser);
+      const result = await this.usersRepository.create(
+        newUser,
+        {},
+        { email: newUser.email },
+      );
       await session.commitTransaction();
       return result;
     } catch (err) {
@@ -41,6 +42,12 @@ export class UsersService {
   ): Promise<UserType> {
     const session = await this.usersRepository.startTransaction();
     try {
+      if (updateUserRequest.password) {
+        updateUserRequest.password = await bcrypt.hash(
+          updateUserRequest.password,
+          10,
+        );
+      }
       const result = await this.usersRepository.findOneAndUpdate(
         { userId: id },
         updateUserRequest,
@@ -53,7 +60,7 @@ export class UsersService {
     }
   }
 
-  async deleteUser(id: string): Promise<any> {
+  async deleteUser(id: string): Promise<UserType> {
     const session = await this.usersRepository.startTransaction();
     try {
       const result = await this.usersRepository.findOneAndDelete({
