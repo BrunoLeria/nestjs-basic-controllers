@@ -30,7 +30,7 @@ export class UsersController {
 
   @Get(':id')
   async getUserById(@Param('id') id: string): Promise<UserType> {
-    return await this.usersService.getUserById(id);
+    return await this.usersService.getUser({ userId: id });
   }
 
   @Patch(':id')
