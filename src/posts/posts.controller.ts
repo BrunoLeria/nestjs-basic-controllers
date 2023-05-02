@@ -48,7 +48,7 @@ export class PostsController {
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
-  async deletePost(@Param('id') id: string): Promise<{ deletedCount: number }> {
+  async deletePost(@Param('id') id: string): Promise<PostType> {
     return await this.postsService.deletePost(id);
   }
 }

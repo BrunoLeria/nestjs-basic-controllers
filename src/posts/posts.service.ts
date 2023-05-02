@@ -42,7 +42,7 @@ export class PostsService {
       throw err;
     }
   }
-  async deletePost(id: string): Promise<any> {
+  async deletePost(id: string): Promise<PostType> {
     const session = await this.postsRepository.startTransaction();
     try {
       const result = await this.postsRepository.findOneAndDelete({
