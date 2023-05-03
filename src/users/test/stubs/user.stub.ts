@@ -7,6 +7,6 @@ export const userStub = (): UserType => {
     userId: '1',
     email: 'michael.lawson@reqres.in',
     name: 'Michael Lawson',
-    password: '123456',
+    password: '$2b$10$isaOSpX9mUZ7PKi0SThkSujtUqrk4iaNh9zfiyZz2ocEOTj2QlGKW',
   };
 };
