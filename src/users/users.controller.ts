@@ -12,7 +12,7 @@ import { UsersService } from './users.service';
 import { CreateUserRequest } from './dto/create-users.request';
 import { UserType } from './schemas/user.schema';
 import { UpdateUserRequest } from './dto/update-users.request';
-import JwtAuthGuard from 'src/auth/guards/jwt-auth.guard';
+import JwtAuthGuard from '../auth/guards/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
