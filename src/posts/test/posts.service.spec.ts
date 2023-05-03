@@ -71,7 +71,6 @@ describe('PostsService', () => {
 
       beforeEach(async () => {
         updatePostRequest = {
-          postId: postStub().postId,
           content: lorem.generateParagraphs(1),
           title: lorem.generateSentences(1),
         };

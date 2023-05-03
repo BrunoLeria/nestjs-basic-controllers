@@ -98,7 +98,6 @@ describe('PostsController', () => {
 
       beforeEach(async () => {
         updatePostRequest = {
-          postId: postStub().postId,
           content: lorem.generateParagraphs(1),
           title: lorem.generateSentences(1),
         };
@@ -123,7 +122,7 @@ describe('PostsController', () => {
 
   describe('deletePost', () => {
     describe('when deletePost is called', () => {
-      let result: { deletedCount: number };
+      let result: PostType;
 
       beforeEach(async () => {
         result = await controller.deletePost(postStub().postId);
