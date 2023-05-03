@@ -6,6 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 import { userStub } from '../../users/test/stubs/user.stub';
 import { response } from 'express';
 import * as bcrypt from 'bcrypt';
+import { UserType } from '../../users/schemas/user.schema';
 
 jest.mock('@nestjs/config');
 jest.mock('@nestjs/jwt');
@@ -79,11 +80,11 @@ describe('AuthService', () => {
   describe('validateUser', () => {
     describe('when validateUser is called', () => {
       let validateUserSpy: jest.SpyInstance;
+      let user: UserType;
 
       beforeEach(async () => {
         validateUserSpy = jest.spyOn(service, 'validateUser');
-        userStub().password = await bcrypt.hash('password', 10);
-        await service.validateUser(userStub().email, 'password');
+        user = await service.validateUser(userStub().email, 'password');
       });
 
       test('should call validateUser', () => {
@@ -91,7 +92,14 @@ describe('AuthService', () => {
       });
 
       test('should return a user', () => {
-        expect(validateUserSpy).toHaveReturnedWith(expect.any(Object));
+        expect(user).toEqual(
+          expect.objectContaining({
+            _id: userStub()._id,
+            userId: userStub().userId,
+            email: userStub().email,
+            name: userStub().name,
+          }),
+        );
       });
     });
   });

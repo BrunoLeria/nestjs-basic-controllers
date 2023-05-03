@@ -44,7 +44,6 @@ export class AuthService {
     try {
       const user = await this.usersService.getUser({ email: email });
       await this.validatePassword(password, user.password);
-      user.password = undefined;
       return user;
     } catch (error) {
       throw new UnauthorizedException('Credentials are not valid.');
