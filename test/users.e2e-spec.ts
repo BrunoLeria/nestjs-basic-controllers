@@ -15,7 +15,7 @@ describe('UsersController (e2e)', () => {
   let user: UserType;
   let loginCookie: string[];
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     })
@@ -61,10 +61,7 @@ describe('UsersController (e2e)', () => {
         .send(createUserRequest)
         .expect(422)
         .expect((res) => {
-          expect(res.body).toHaveProperty(
-            'message',
-            'This document already exists',
-          );
+          expect(res.body.message).toEqual('This document already exists');
         });
     });
   });
