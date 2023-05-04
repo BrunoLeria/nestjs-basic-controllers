@@ -5,6 +5,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Types } from 'mongoose';
 import { UsersService } from '../../users/users.service';
 import { TokenPayload } from '../interfaces/tokenPayload.interface';
+import * as cookie from 'cookie';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -15,7 +16,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         (request: any) => {
-          return request?.cookies?.Authentication;
+          const cookies = cookie.parse(request.headers.cookie);
+          return cookies.Authentication;
         },
       ]),
       secretOrKey: configService.get('JWT_SECRET'),
