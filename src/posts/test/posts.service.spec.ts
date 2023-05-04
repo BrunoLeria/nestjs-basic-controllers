@@ -51,7 +51,7 @@ describe('PostsService', () => {
       let post: PostType;
 
       beforeEach(async () => {
-        post = await service.getPostById(postStub().postId);
+        post = await service.getPost({ postId: postStub().postId });
       });
 
       test('then it should call postsRepository', () => {

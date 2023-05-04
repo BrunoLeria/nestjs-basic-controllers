@@ -56,7 +56,7 @@ describe('PostsController', () => {
       });
 
       test('then it should call postsService', () => {
-        expect(service.getPostById).toBeCalledWith(postStub().postId);
+        expect(service.getPost).toBeCalledWith({ postId: postStub().postId });
       });
 
       test('then it should return a post', () => {

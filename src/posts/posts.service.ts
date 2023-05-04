@@ -10,9 +10,10 @@ export class PostsService {
   async getPosts(): Promise<PostType[]> {
     return await this.postsRepository.find({});
   }
-  async getPostById(id: string): Promise<PostType> {
-    return await this.postsRepository.findOne({ postId: id });
+  async getPost(getPostArgs: Partial<PostType>): Promise<PostType> {
+    return this.postsRepository.findOne(getPostArgs);
   }
+
   async updatePost(
     id: string,
     updatePostRequest: UpdatePostRequest,
