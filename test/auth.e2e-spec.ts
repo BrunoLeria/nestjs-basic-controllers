@@ -38,7 +38,7 @@ describe('PostsController (e2e)', () => {
     it('/login (POST)', async () => {
       return request(app.getHttpServer())
         .post('/login')
-        .send({ email: userStub().email, password: userStub().password })
+        .send({ email: userStub().email, password: 'password' })
         .expect(200)
         .expect((res) => {
           loginCookie = res.header['set-cookie'][0].split(';')[0];
