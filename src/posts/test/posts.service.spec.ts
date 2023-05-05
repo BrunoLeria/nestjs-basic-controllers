@@ -46,8 +46,8 @@ describe('PostsService', () => {
     });
   });
 
-  describe('getPostById', () => {
-    describe('when getPostById is called', () => {
+  describe('getPost', () => {
+    describe('when getPost is called', () => {
       let post: PostType;
 
       beforeEach(async () => {
