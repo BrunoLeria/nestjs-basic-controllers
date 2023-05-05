@@ -1,12 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersRepository } from '../users.repository';
 import { UserModel } from './support/user.model';
-import {
-  Connection,
-  FilterQuery,
-  QueryOptions,
-  ProjectionType,
-} from 'mongoose';
+import { Connection, FilterQuery, QueryOptions } from 'mongoose';
 import { getConnectionToken, getModelToken } from '@nestjs/mongoose';
 import { UserType } from '../schemas/user.schema';
 import { userStub } from './stubs/user.stub';
@@ -18,7 +13,6 @@ describe('UsersRepository', () => {
 
     let filterQuery: FilterQuery<UserType>;
     let queryOptions: QueryOptions<UserType>;
-    let projectionType: ProjectionType<UserType>;
 
     beforeEach(async () => {
       const module: TestingModule = await Test.createTestingModule({
@@ -36,7 +30,6 @@ describe('UsersRepository', () => {
       model = module.get<UserModel>(getModelToken(UserType.name));
       filterQuery = { userId: userStub().userId };
       queryOptions = { lean: true };
-      projectionType = { __v: 0 };
 
       jest.clearAllMocks();
     });
@@ -62,7 +55,7 @@ describe('UsersRepository', () => {
         test('then it should call model', () => {
           expect(model.find).toBeCalledWith(
             filterQuery,
-            projectionType,
+            { _id: 0, __v: 0 },
             queryOptions,
           );
         });
@@ -86,7 +79,7 @@ describe('UsersRepository', () => {
         test('then it should call model', () => {
           expect(model.findOne).toBeCalledWith(
             filterQuery,
-            projectionType,
+            { __v: 0 },
             queryOptions,
           );
         });

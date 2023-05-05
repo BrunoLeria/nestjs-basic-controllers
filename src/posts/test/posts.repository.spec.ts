@@ -1,12 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PostsRepository } from '../posts.repository';
 import { PostModel } from './support/post.model';
-import {
-  Connection,
-  FilterQuery,
-  QueryOptions,
-  ProjectionType,
-} from 'mongoose';
+import { Connection, FilterQuery, QueryOptions } from 'mongoose';
 import { getConnectionToken, getModelToken } from '@nestjs/mongoose';
 import { PostType } from '../schemas/post.schema';
 import { postStub } from './stubs/post.stub';
@@ -18,7 +13,6 @@ describe('PostsRepository', () => {
 
     let filterQuery: FilterQuery<PostType>;
     let queryOptions: QueryOptions<PostType>;
-    let projectionType: ProjectionType<PostType>;
 
     beforeEach(async () => {
       const module: TestingModule = await Test.createTestingModule({
@@ -36,7 +30,6 @@ describe('PostsRepository', () => {
       model = module.get<PostModel>(getModelToken(PostType.name));
       filterQuery = { postId: postStub().postId };
       queryOptions = { lean: true };
-      projectionType = { __v: 0 };
 
       jest.clearAllMocks();
     });
@@ -62,7 +55,7 @@ describe('PostsRepository', () => {
         test('then it should call model', () => {
           expect(model.find).toBeCalledWith(
             filterQuery,
-            projectionType,
+            { _id: 0, __v: 0 },
             queryOptions,
           );
         });
@@ -86,7 +79,7 @@ describe('PostsRepository', () => {
         test('then it should call model', () => {
           expect(model.findOne).toBeCalledWith(
             filterQuery,
-            projectionType,
+            { __v: 0 },
             queryOptions,
           );
         });
