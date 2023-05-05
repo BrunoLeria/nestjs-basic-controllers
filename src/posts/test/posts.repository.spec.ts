@@ -36,7 +36,7 @@ describe('PostsRepository', () => {
       model = module.get<PostModel>(getModelToken(PostType.name));
       filterQuery = { postId: postStub().postId };
       queryOptions = { lean: true };
-      projectionType = { __v: 0 };
+      projectionType = { _id: 0, __v: 0 };
 
       jest.clearAllMocks();
     });

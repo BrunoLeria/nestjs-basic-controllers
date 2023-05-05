@@ -36,7 +36,7 @@ describe('UsersRepository', () => {
       model = module.get<UserModel>(getModelToken(UserType.name));
       filterQuery = { userId: userStub().userId };
       queryOptions = { lean: true };
-      projectionType = { __v: 0 };
+      projectionType = { _id: 0, __v: 0 };
 
       jest.clearAllMocks();
     });
