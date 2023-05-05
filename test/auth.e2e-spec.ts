@@ -12,10 +12,7 @@ describe('PostsController (e2e)', () => {
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    })
-      .overrideProvider(PostsRepository)
-      .useClass(PostsRepository)
-      .compile();
+    }).compile();
 
     app = moduleFixture.createNestApplication();
 

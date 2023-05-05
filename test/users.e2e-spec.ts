@@ -2,10 +2,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { UsersRepository } from '../src/users/users.repository';
-import { AppModule } from '../src/app.module';
 import { UserType } from '../src/users/schemas/user.schema';
 import { CreateUserRequest } from '../src/users/dto/create-users.request';
 import { UpdateUserRequest } from '../src/users/dto/update-users.request';
+import { AppModule } from '../src/app.module';
 
 describe('UsersController (e2e)', () => {
   let app: INestApplication;
@@ -18,10 +18,7 @@ describe('UsersController (e2e)', () => {
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    })
-      .overrideProvider(UsersRepository)
-      .useClass(UsersRepository)
-      .compile();
+    }).compile();
 
     app = moduleFixture.createNestApplication();
     usersRepository = moduleFixture.get<UsersRepository>(UsersRepository);
