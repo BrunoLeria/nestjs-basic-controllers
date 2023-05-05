@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { PostsRepository } from '../src/posts/posts.repository';
 import { AppModule } from '../src/app.module';
 import * as request from 'supertest';
 import { userStub } from '../src/users/test/stubs/user.stub';
