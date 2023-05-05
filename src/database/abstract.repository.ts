@@ -42,7 +42,7 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
   async findOne(filterQuery: FilterQuery<TDocument>): Promise<TDocument> {
     const document = await this.model.findOne(
       filterQuery,
-      { _id: 0, __v: 0 },
+      { __v: 0 },
       { lean: true },
     );
 
