@@ -3,7 +3,7 @@ import { CreatePostRequest } from './dto/create-posts.request';
 import { UpdatePostRequest } from './dto/update-posts.request';
 import { PostsRepository } from './posts.repository';
 import { PostType } from './schemas/post.schema';
-import { uuid } from 'uuidv4';
+import { v4 } from 'uuid';
 @Injectable()
 export class PostsService {
   constructor(private readonly postsRepository: PostsRepository) {}
@@ -34,7 +34,7 @@ export class PostsService {
   async createPost(createPostRequest: CreatePostRequest): Promise<PostType> {
     const session = await this.postsRepository.startTransaction();
     try {
-      const newPost = { postId: uuid(), ...createPostRequest };
+      const newPost = { postId: v4(), ...createPostRequest };
       const result = await this.postsRepository.create(newPost);
       await session.commitTransaction();
       return result;
